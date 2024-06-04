@@ -39,8 +39,14 @@ public class DbConfig {
             Class.forName(driverClass);
             try (Connection connection = DriverManager.getConnection(jdbcUrl, user, pass)) {
                 connection.setAutoCommit(false);
-                ExecuteQueryFromFile.executeQueriesFromFile(connection, queryFilePath);
-                connection.commit();
+                try {
+                    ExecuteQueryFromFile.runScript(queryFilePath, connection);
+                    connection.commit();
+                    System.out.println("Query OK");
+                } catch (Exception e) {
+                    connection.rollback();
+                    System.out.println("Error executing script, all changes have been rolled back: " + e.getMessage());
+                }
             } catch (SQLException e) {
                 System.out.println("Database connection error: " + e.getMessage());
             }

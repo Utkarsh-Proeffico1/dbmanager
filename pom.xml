@@ -33,6 +33,13 @@
             <artifactId>ojdbc10</artifactId>
             <version>19.23.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.16</version>
+        </dependency>
+
 
     </dependencies>
 
