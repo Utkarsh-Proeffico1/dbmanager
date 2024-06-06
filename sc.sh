@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn clean package
 
 java -jar target/dbmanager.jar -u <user> -p <pass> -d localhost:3306/test -dbtype mysql -q query.sql
 
