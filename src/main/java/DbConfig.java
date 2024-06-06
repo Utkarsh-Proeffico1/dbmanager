@@ -43,15 +43,19 @@ public class DbConfig {
                     ExecuteQueryFromFile.runScript(queryFilePath, connection);
                     connection.commit();
                     System.out.println("Query OK");
+                    System.exit(0);
                 } catch (Exception e) {
                     connection.rollback();
                     System.out.println("Error executing script, all changes have been rolled back: " + e.getMessage());
+                    System.exit(1);
                 }
             } catch (SQLException e) {
                 System.out.println("Database connection error: " + e.getMessage());
+                System.exit(1);
             }
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC Driver not found: " + e.getMessage());
+            System.exit(1);
         }
     }
 }
