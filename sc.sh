@@ -11,5 +11,4 @@ else
     echo "HOLA -> Status: $status"
 fi
 
-# Exit with the captured status
 exit $status
