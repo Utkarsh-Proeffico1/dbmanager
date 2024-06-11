@@ -25,10 +25,12 @@ public class DbConfig {
         String dbUrlValue = cmd.getOptionValue("dburl");
         String dbTypeValue = cmd.getOptionValue("dbtype");
         String queryFilePath = cmd.getOptionValue("queryfile");
+        String type = cmd.getOptionValue("filetype");
 
         String driverClass = Utils.getDriverClass(dbTypeValue);
         String jdbcUrl = Utils.getJdbcUrl(dbTypeValue, dbUrlValue);
 
+        System.out.println(jdbcUrl);
         if (driverClass == null || jdbcUrl == null) {
             System.out.println("Unsupported database type: " + dbTypeValue);
             System.exit(1);
@@ -36,11 +38,20 @@ public class DbConfig {
         }
 
         try {
+            System.out.println(type);
             Class.forName(driverClass);
             try (Connection connection = DriverManager.getConnection(jdbcUrl, user, pass)) {
                 connection.setAutoCommit(false);
                 try {
-                    ExecuteQueryFromFile.runScript(queryFilePath, connection);
+                    if(type.equals("s")) {
+                        ExecuteQueryFromFile.runScriptWithStatements(queryFilePath, connection);
+                    }
+                    else if(type.equals("f")) {
+                        ExecuteQueryFromFile.runScriptWithFunctions(queryFilePath,connection);
+                    }
+                    else {
+                        throw new Exception("Unsupported file type: " + type);
+                    }
                     connection.commit();
                     System.out.println("Query OK");
                     System.exit(0);

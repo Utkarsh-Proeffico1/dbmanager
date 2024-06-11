@@ -25,6 +25,10 @@ public class CommandLineOptions {
         queryFile.setRequired(true);
         options.addOption(queryFile);
 
+        Option fileType = new Option("ft", "filetype", true, "Type of SQL file (statement(s)/function(f)");
+        fileType.setRequired(true);
+        options.addOption(fileType);
+
 
         return options;
     }
